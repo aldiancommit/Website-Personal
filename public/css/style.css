@@ -1,0 +1,540 @@
+/* === Base Layout & Theme === */
+/* Biarkan body hanya mengatur background dan font dasar */
+body {
+  color: #ade8f4;
+  /* Properti background dan font bisa tetap di inline style HTML
+       atau dipindahkan ke sini agar lebih rapi. */
+}
+
+/* === EFEK transisi HALAMAN === */
+
+/* Definisikan keyframes untuk animasi */
+@keyframes page-entry {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Mulai dari 30px di bawah posisi asli */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Kelas yang akan kita terapkan pada pembungkus konten */
+.content-wrapper {
+  /* Mulai dengan transparan agar tidak ada flash konten */
+  opacity: 0;
+  /* Terapkan animasi: nama, durasi, delay, timing-function, fill-mode */
+  animation: page-entry 0.8s 0.2s ease-out forwards;
+}
+
+/* === STYLE INTERAKTIF UNTUK NAVBAR === */
+
+/* 1. Pengaturan Dasar untuk Link Navigasi */
+#mainNavbar .nav-link {
+  position: relative; /* Diperlukan untuk garis bawah animasi */
+  padding: 0.5rem 0;
+  margin: 0 1rem;
+  color: #adb5bd; /* Warna default link */
+  transition: color 0.3s ease-in-out;
+}
+
+/* 2. Garis Bawah Animasi (Pseudo-element) */
+#mainNavbar .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px; /* Jarak garis dari teks */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #48cae4; /* Warna garis bawah */
+  transform: scaleX(0); /* Awalnya tidak terlihat (lebar 0) */
+  transform-origin: center; /* Animasi dari tengah */
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 3. Efek saat Link di-Hover */
+#mainNavbar .nav-link:hover {
+  color: #ffffff; /* Warna teks menjadi putih saat disentuh */
+}
+
+#mainNavbar .nav-link:hover::after {
+  transform: scaleX(1); /* Garis bawah muncul saat disentuh */
+}
+
+/* 4. Style untuk Link yang Sedang Aktif */
+#mainNavbar .nav-link.active {
+  color: #ffffff; /* Warna teks link aktif */
+  font-weight: 700; /* Sedikit lebih tebal */
+}
+
+#mainNavbar .nav-link.active::after {
+  transform: scaleX(1); /* Garis bawah selalu terlihat untuk link aktif */
+  background-color: #ade8f4; /* Warna garis bisa dibedakan */
+}
+
+/* 5. Efek Tambahan pada Brand */
+#mainNavbar .navbar-brand {
+  transition: transform 0.3s ease;
+}
+#mainNavbar .navbar-brand:hover {
+  transform: scale(1.05); /* Sedikit membesar saat disentuh */
+}
+
+/* 6. Aksen pada Navbar Saat di-scroll */
+#mainNavbar.scrolled {
+  /* Menambahkan garis atas dengan gradien saat di-scroll */
+  border-top: 3px solid;
+  border-image: linear-gradient(to right, transparent, #48cae4, transparent) 1;
+  /* Efek blur yang sudah ada sebelumnya */
+  background-color: rgba(10, 9, 8, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Pastikan navbar menjadi acuan posisi */
+#mainNavbar .container {
+  position: relative;
+}
+
+/* Hanya berlaku untuk layar besar (lebar 992px atau lebih) */
+@media (min-width: 992px) {
+  #mainNavbar .navbar-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Terapkan flexbox ke <main> untuk menengahkan konten di dalamnya */
+main {
+  display: flex;
+  justify-content: center; /* Menengahkan secara horizontal */
+  align-items: center; /* Menengahkan secara vertikal */
+  min-height: 80vh; /* Tinggi minimal seukuran layar */
+  width: 100%;
+  padding: 2rem; /* Beri padding agar konten tidak mepet ke tepi layar */
+}
+
+/* Sisa style Anda (.simple-header, dll.) tidak perlu diubah */
+.simple-header {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 900px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Penyesuaian untuk layar kecil (mobile) */
+@media (max-width: 768px) {
+  .simple-header {
+    flex-direction: column;
+    /* Susun ke bawah */
+    text-align: center;
+    /* Teks menjadi rata tengah */
+    gap: 2rem;
+  }
+}
+
+/* === Content & Typography === */
+.text-content .greeting {
+  font-weight: 600;
+}
+
+.text-content .greeting {
+  color: #ade8f4;
+  max-width: 90%;
+}
+
+.text-content .lead {
+  color: #fff;
+  font-weight: 600;
+  max-width: 90%;
+}
+
+.text-content span {
+  background: linear-gradient(100deg, #48cae4, rgb(255, 255, 255), #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 750;
+}
+
+@media (max-width: 768px) {
+  .text-content .lead {
+    max-width: 100%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    rgb(248, 254, 255),
+    rgb(255, 255, 255),
+    #fff
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* === Image & Effects === */
+/* === Image & Effects === */
+.profile-image img {
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1rem 3rem rgba(72, 202, 228, 0.3);
+  /* Bayangan berwarna saat hover */
+}
+
+/* === Entry Animation === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-content-card {
+  min-height: 80vh;
+  padding: 40px;
+}
+
+/* === ABOUT SECTION STYLING === */
+/* ✅ MENJADI SEPERTI INI: */
+#about {
+}
+
+/* Container di dalam #about menjadi KARTU visualnya */
+#about .container {
+  background-color: rgba(104, 114, 128, 0.25);
+  border-radius: 15px;
+  padding: 3rem; /* Padding internal untuk kartu */
+  border: 1px solid rgb(238, 235, 228);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Optional: tambah bayangan halus */
+}
+
+#about h2 {
+  color: #fff;
+  font-size: 35px;
+}
+
+.section-divider {
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to right, #ade8f4, rgba(173, 232, 244, 0));
+  opacity: 1;
+  border-radius: 3px;
+}
+
+.about-image-wrapper {
+  position: relative;
+  padding: 10px;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease;
+}
+
+.about-image-wrapper:hover {
+  box-shadow: 0 0 30px rgba(72, 202, 228, 0.5);
+}
+
+.about-image-wrapper img {
+  border: 4px solid #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #e0e0e0;
+  line-height: 1.7;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* === SKILLS SECTION === */
+#skills h2 {
+  color: #fff;
+  font-size: 35px;
+}
+
+/* Garis Horizontal Dekoratif */
+.section-divider-skill {
+  border: 0;
+  height: 3px;
+  /* Warna diubah di sini */
+  background-image: linear-gradient(to right, #ade8f4, rgba(173, 232, 244, 0));
+  opacity: 1;
+  border-radius: 3px;
+}
+
+/* Styling Tabs (Nav Pills) */
+.nav-pills .nav-item .nav-link {
+  color: #adb5bd;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.nav-pills .nav-item .nav-link.active,
+.nav-pills .nav-item .nav-link:hover {
+  color: #0a0908;
+  /* Warna diubah di sini */
+  background-color: #ade8f4;
+}
+
+/* Styling Skill Card */
+.skill-card {
+  background-color: #212529;
+  /* Warna diubah di sini */
+  border: 1px solid #ade8f4;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  background-color: #343a40;
+  /* Warna diubah di sini (menggunakan versi RGB dari #ade8f4) */
+  box-shadow: 0 0 20px rgba(173, 232, 244, 0.2);
+}
+
+.skill-icon {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+/* === PENYESUAIAN RESPONSIVE (MOBILE & TABLET) === */
+
+/* Aturan untuk layar di bawah 992px (Tablet) */
+@media (max-width: 992px) {
+  #about .container {
+    /* Kurangi padding kartu di tablet agar tidak terlalu memakan tempat */
+    padding: 2.5rem;
+  }
+
+  #about h2,
+  #skills h2 {
+    /* Kecilkan sedikit ukuran judul */
+    font-size: 32px;
+  }
+}
+
+.skill-card span {
+  word-break: break-all;
+}
+
+/* Aturan untuk layar di bawah 768px (Mobile) */
+@media (max-width: 768px) {
+  #about .container {
+    /* Kurangi lagi padding kartu di mobile */
+    padding: 2rem 1.5rem;
+  }
+
+  #about h2,
+  #skills h2 {
+    /* Perkecil lagi ukuran judul di mobile */
+    font-size: 20px;
+  }
+
+  .about-text {
+    /* Kecilkan ukuran font bio di mobile agar lebih mudah dibaca */
+    font-size: 14px;
+    /* Ratakan teks ke tengah saat gambar berada di atasnya */
+    text-align: center;
+  }
+
+  /* Membuat tombol navigasi skills lebih rapi di mobile */
+  #skills .nav-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Tombol berada di tengah */
+    gap: 0.5rem; /* Memberi sedikit jarak antar tombol */
+  }
+
+  #skills .nav-pills .nav-item {
+    flex-grow: 1; /* Membuat setiap tombol memiliki lebar yang sama */
+    text-align: center; /* Teks di dalam tombol menjadi rata tengah */
+  }
+
+  .skill-card {
+    /* 1. Ubah tata letak menjadi vertikal */
+    flex-direction: column;
+
+    /* 2. Sesuaikan padding dan jarak untuk layout vertikal */
+    padding: 1.25rem 0.5rem;
+    gap: 0.75rem;
+
+    /* 3. Pusatkan konten di tengah kartu */
+    justify-content: center;
+  }
+
+  .skill-card span {
+    /* 4. Kecilkan sedikit font agar lebih pas */
+    font-size: 0.9rem;
+    text-align: center; /* Pastikan teks juga rata tengah */
+  }
+}
+
+/* --- Portfolio Section --- */
+.portfolio {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  color: #a0a0a0; /* Warna abu-abu untuk subjudul */
+}
+
+/* --- Projects Grid Layout --- */
+.projects-grid {
+  display: grid;
+  /* Membuat grid yang responsif: 1 kolom di layar kecil, 2-3 di layar lebih besar */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* --- Project Card Styling --- */
+.project-card {
+  background-color: #252525; /* Warna background kartu */
+  border-radius: 15px;
+  overflow: hidden; /* Memastikan gambar tidak keluar dari sudut rounded */
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px; /* Tinggi gambar tetap */
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Gambar akan menutupi area tanpa distorsi */
+  object-position: top center; /* Fokus pada bagian atas gambar */
+}
+
+.card-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Membuat semua card-content memiliki tinggi yang sama */
+}
+
+.card-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.card-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #b0b0b0;
+  margin-bottom: 20px;
+}
+
+.card-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto; /* Mendorong tags ke bagian bawah sebelum link */
+  padding-bottom: 20px;
+}
+
+.card-tags span {
+  background-color: #333;
+  color: #e0e0e0;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.card-links {
+  display: flex;
+  gap: 20px;
+  align-self: flex-end; /* Meletakkan link di pojok kanan bawah */
+}
+
+.card-links a {
+  color: #c0c0c0;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.card-links a:hover {
+  color: #ffffff;
+}
+
+/* === STYLE TAMBAHAN UNTUK NAVBAR SCROLL & BLUR === */
+
+/* Mengatur navbar agar menempel di atas saat scroll */
+#mainNavbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
+  transition: background-color 0.4s ease-in-out;
+  /* Secara default transparan, menyesuaikan warna body */
+  background-color: transparent;
+}
+
+/* Kelas yang akan ditambahkan oleh JavaScript saat di-scroll */
+#mainNavbar.scrolled {
+  background-color: rgba(
+    0,
+    24,
+    36,
+    0.5
+  ); /* Warna bg body dengan transparansi */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Untuk browser Safari */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
